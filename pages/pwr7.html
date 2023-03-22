@@ -1,0 +1,73 @@
+<div id="pwr7">
+    <ul>
+        <h1>Alterando o Prompt do Powershell 7</h1>
+        <li>Quando você abre o console do Powershell ele vem com um prompt, sem graça, nada funcional.</li>
+        <li>Fique tranquilo que agora você vai altera-lo e até vai poder fazer uma média com os amigos.</li>
+        <li>Basta seguir os passos abaixo e você terá um prompt muito parecido com o prompt do Terminal do kali
+            linux.
+        </li>
+    </ul>
+
+    <ul>
+        <h2>Instruções</h2>
+        <li>
+            <p>- Este recurso foi testado no Powershell 7, portanto é possível que não funcione em versões
+                inferiores.
+            </p>
+            <p>- Para verificar se você tem a versão correta, primeiro abre o explorer e em seguida tente
+                acessar a
+                pasta
+            <h5>C:\Program Files\PowerShell\7</h5>
+            </p>
+            <p>- É nesta pasta que você vai criar um arquivo, colar o conteúdo abaixo e salvar com o nome
+            <h5>Microsoft.PowerShell_profile.ps1</h5>
+            </p>
+        </li>
+    </ul>
+
+    <ul>
+        <h2>Copie e cole</h2>
+        <li>
+            <pre>
+function prompt {
+$i = 0
+$arrow = ' '
+$folder = $(Get-Location)
+$userFolder = "$folder".replace( "$env:USERPROFILE", '~')
+$folders = @("$userFolder".Split("\"))
+Write-Host ("┬──(") -NoNewLine -ForegroundColor Cyan
+Write-Host ("$env:COMPUTERNAME".ToLower()) -NoNewLine -ForegroundColor green
+Write-Host ("®") -NoNewLine -ForegroundColor Red
+Write-Host ("$env:UserName".ToLower()) -NoNewLine -ForegroundColor Yellow
+Write-Host (")") -NoNewLine -ForegroundColor Cyan
+Write-Host ("-") -NoNewLine -ForegroundColor Red
+Write-Host ("[") -NoNewLine -ForegroundColor Cyan
+$folders.ForEach({
+    $i = $i + 1
+    if ($i -eq 1) {
+    Write-Host ($_) -NoNewLine -ForegroundColor White
+    } else {
+    Write-Host ($_) -NoNewLine -ForegroundColor Green
+    }
+    if ($i -eq $folders.Count) {
+    if ($_ -eq "~") {} else {}
+    } else {
+    Write-Host ("\") -NoNewLine -ForegroundColor White
+    }
+})	
+Write-Host ("]") -ForegroundColor Cyan
+Write-Host ("└─>") -NoNewLine -ForegroundColor Cyan
+Write-Host ("$") -NoNewLine -ForegroundColor Red
+return ' '
+}
+        </pre>
+        </li>
+    </ul>
+
+    <ul>
+        <h2>Resultado</h2>
+        <li>
+            <img src="./assets/images/prompt.png" alt="imagem do prompt alterado" />
+        </li>
+    </ul>
+</div>

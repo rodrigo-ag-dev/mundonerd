@@ -1,0 +1,315 @@
+:root {
+    --menu-size: 250px
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    border: none;
+    box-sizing: border-box;
+    outline: none;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+}
+
+body {
+    background-color: #eee;
+}
+
+header {
+    display: flex;
+    flex-direction: row;
+    background-color: #222;
+    padding: 10px;
+    text-align: center;
+    align-items: center;
+    width: 100%;
+}
+
+header p {
+    color: #fff;
+}
+
+header rect {
+    fill: #fff;
+}
+
+.menuShowing {
+    margin-left: var(--menu-size);
+}
+
+.menuHighing {
+    margin-left: 0;
+}
+
+#btnMenu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    padding: 10px;
+    background-color: #222;
+    transition: all .5s;
+    width: 40px;
+    height: 40px;
+}
+
+#btnMenu:hover {
+    border-radius: 50%;
+    cursor: pointer;
+    background-color: rgb(49, 54, 85);
+}
+
+#btnMenu:active {
+    border-radius: 50%;
+    cursor: pointer;
+    background-color: black;
+}
+
+.content {
+    width: 100%;
+    min-width: 70%;
+    max-width: 80%;
+    margin: 0 auto;
+    margin-top: 50px;
+}
+
+.menu {
+    transition: background .3s;
+    position: fixed;
+    top: 0;
+    width: var(--menu-size);
+    height: 100%;
+    background-color: #222;
+}
+
+.menu ul {
+    list-style: none;
+}
+
+.menu ul li {
+    display: block;
+}
+
+.menu ul li a {
+    display: block;
+    color: #fff;
+    font-size: 19px;
+    text-decoration: none;
+    padding: 10px 15px;
+}
+
+.menu ul li a:hover {
+    background-color: rgb(49, 54, 85);
+}
+
+.effect {
+    transition: margin .4s;
+}
+
+.show {
+    margin-left: 0;
+}
+
+.hide {
+    margin-left: calc(var(--menu-size) * -1);
+}
+
+#headerclose {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    height: 60px;
+}
+
+#btnClose {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    padding: 10px;
+    background-color: #222;
+    transition: all .5s;
+    width: 40px;
+    height: 40px;
+    margin: 10px;
+}
+
+#btnClose:hover {
+    border-radius: 50%;
+    cursor: pointer;
+    background-color: red;
+}
+
+#btnClose:active {
+    border-radius: 50%;
+    cursor: pointer;
+    background-color: black;
+}
+
+.content ul {
+    margin-top: 10px;
+    padding-bottom: 15px;
+    background-color: white;
+    width: 100%;
+    border-radius: 10px;
+    border: 0.5px solid #e0dfdc;
+    padding-inline: 30px;
+}
+
+.content ul li {
+    display: flex;
+    flex-direction: column;
+}
+
+.content ul li p {
+    margin: 0px;
+    padding-top: 5px;
+    margin-left: 5px;
+}
+
+.content ul li h4,
+h5 {
+    margin: 0px;
+    padding: 0px;
+    margin-left: 12px;
+}
+
+.content ul h1 {
+    text-transform: uppercase;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    font-weight: bold;
+    font-size: 1.6rem;
+    line-height: 1.5rem;
+}
+
+.content ul h2 {
+    margin-top: 15px;
+    margin-bottom: 5px;
+    font-weight: bold;
+    font-size: 1.6rem;
+    line-height: 1.5rem;
+}
+
+.content ul h3 {
+    margin-top: 5px;
+    margin-bottom: 2px;
+    line-height: 1.5rem;
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: #303030;
+}
+
+.content .perfilImage {
+    margin: 80px 25px;
+    width: 156px;
+    height: 156px;
+    border-radius: 78px;
+    border: 4px solid white;
+}
+
+.content .perfilTitulo {
+    margin: -250px 250px;
+    width: 550px;
+    height: 156px;
+    font-weight: bold;
+    font-size: 4rem;
+    line-height: 1.5rem;
+}
+
+.content .capaTopo {
+    margin-top: 15px;
+    background-color: #a0b4b7;
+    min-height: 180px;
+    max-height: 180px;
+    height: 100px;
+    border-radius: 0px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border: 0.5px solid #e0dfdc;
+}
+
+.content .capaBase {
+    background-color: white;
+    min-height: 180px;
+    border-radius: 0px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border: 0.5px solid lightgray;
+    padding-top: 80px;
+    margin-top: -25px;
+}
+
+.content .footer {
+    position: relative;
+    bottom: 0;
+    height: 15px;
+}
+
+
+#series {
+    display: flex;
+    flex-direction: row;
+}
+
+.secao-filmes {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.groupCard {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.cards {
+    position: relative;
+    color: #000;
+    box-sizing: border-box;
+    border: 1px solid #333;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-top: 30px;
+    min-width: 200px;
+    max-width: 200px;
+    max-height: 400px;
+    margin: 5px;
+    background-color: #333;
+}
+
+.cards img {
+    max-height: 100%;
+}
+
+.cards p {
+    position: absolute;
+    bottom: 10px;
+    color: #fff;
+    font-size: 23px;
+    white-space: wrap;
+    overflow: hidden;
+    margin-inline: 15px;
+    text-shadow: 2px 2px #000;
+    background-color: #297fcfaa;
+    padding: 5px;
+    border-radius: 10px;
+}
+
+.nota {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    color: #fff;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: flex-end;
+    background-color: #297fcfaa;
+    padding: 10px;
+    border-radius: 50%;
+    justify-content: center;
+    align-items: center;
+}
