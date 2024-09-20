@@ -5,6 +5,14 @@ const text2Unicode = (text) => {
     }).join('');
 }
 
+const clearAll = () => {
+    const text = document.getElementById("input");
+    text.value = '';
+    setOutput();
+    clearCopyButton();
+    text.focus();
+}
+
 const clearCopyButton = () => {
     const btn = document.getElementById('copiar');
     btn.classList.remove('colorRed');
@@ -12,15 +20,23 @@ const clearCopyButton = () => {
 }
 
 const setOutput = () => {
+    const btn = document.getElementById('copiar');
     const text = document.getElementById("input").value;
     const response = text2Unicode(text);
     const output = document.getElementById("output");
+
+    btn.focus();
+
     output.innerHTML = response;
 }
 
 const ccb = (name) => {
     const obj = document.getElementById(name);
     const btn = document.getElementById('copiar');
+    const clear = document.getElementById("limpar");
+
+    clear.focus();    
+
     navigator.clipboard.writeText(obj.innerHTML).then(function () {
         btn.classList.add('colorGreen');
     }).catch(function (err) {
@@ -158,11 +174,15 @@ t2u.addEventListener("click", e => {
         <li>
             <div id="t2uDiv">
                 <section class="secao-t2u">
-                  <input id="input" class="t2uObj" onchange={setOutput()} autofocus />
+                  <input id="input" class="t2uObj" autofocus />
+                  <button id="transcrever" onclick={setOutput()}>Transcrever</button>
+                </section>
+                <section class="secao-t2u">
+                  <div id="output" class="t2uObj"></div>
                   <button id="copiar" onclick={ccb("output")}>Copiar</button>
                 </section>
-                <section class="secao-filmes">
-                  <div id="output"></div>
+                <section class="secao-t2u">
+                  <button id="limpar" onclick={clearAll()}>Limpar</button>
                 </section>
             </div>
         </li>
