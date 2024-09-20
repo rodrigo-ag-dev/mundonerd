@@ -11,6 +11,22 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
 }
 
+input {
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    width: 100%;
+    height: 28px;
+    padding: 5px;
+}
+
+button {
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    height: 28px;
+    padding: 5px;
+    cursor: pointer;
+}
+
 body {
     background-color: #eee;
 }
@@ -252,9 +268,30 @@ h5 {
     flex-direction: row;
 }
 
+#copiar {
+    margin-left: 10px;
+}
+
+.colorRed {
+    background-color: lightcoral;
+}
+
+.colorGreen {
+    background-color: lightgreen;
+}
+
+.t2uObj {
+    margin-block: 5px;
+}
+
 .secao-filmes {
     display: flex;
     flex-wrap: wrap;
+}
+
+.secao-t2u {
+    display: flex;
+    align-items: center;
 }
 
 .groupCard {

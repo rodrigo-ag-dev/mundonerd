@@ -1,3 +1,35 @@
+const text2Unicode = (text) => {
+    return text.split('').map(char => {
+        const code = char.charCodeAt(0);
+        return code > 127 ? `\\u${code.toString(16).padStart(4, '0')}` : char;
+    }).join('');
+}
+
+const clearCopyButton = () => {
+    const btn = document.getElementById('copiar');
+    btn.classList.remove('colorRed');
+    btn.classList.remove('colorGreen');
+}
+
+const setOutput = () => {
+    const text = document.getElementById("input").value;
+    const response = text2Unicode(text);
+    const output = document.getElementById("output");
+    output.innerHTML = response;
+}
+
+const ccb = (name) => {
+    const obj = document.getElementById(name);
+    const btn = document.getElementById('copiar');
+    navigator.clipboard.writeText(obj.innerHTML).then(function () {
+        btn.classList.add('colorGreen');
+    }).catch(function (err) {
+        btn.classList.add('colorRed');
+        console.error('Erro ao copiar o conteúdo: ', err);
+    });
+    setTimeout(() => clearCopyButton(), 2000);
+}
+
 const card = (element) => {
     const poster = document.createElement("img")
     poster.src = "https://www.themoviedb.org/t/p/w300" + element.poster_path
@@ -115,6 +147,29 @@ optionFilms.addEventListener("click", e => {
     </ul>
       `
     data("https://api.themoviedb.org/3/trending/movie/week?api_key=02d559f2f2a791ee43539e09647ff4b2&language=pt-BR")
+    hideMenu()
+})
+
+t2u.addEventListener("click", e => {
+    e.preventDefault()
+    detail.innerHTML = ` 
+    <ul>
+        <h2>Texto para unicode</h2>
+        <li>
+            <div id="t2uDiv">
+                <section class="secao-t2u">
+                  <input id="input" class="t2uObj" onchange={setOutput()} autofocus />
+                  <button id="copiar" onclick={ccb("output")}>Copiar</button>
+                </section>
+                <section class="secao-filmes">
+                  <div id="output"></div>
+                </section>
+            </div>
+        </li>
+    </ul>
+      `
+    document.getElementById('input').focus();
+    clearCopyButton()
     hideMenu()
 })
 
