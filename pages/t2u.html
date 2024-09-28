@@ -1,0 +1,15 @@
+<div class="t2uDiv">
+  <h2>Text to unicode</h2>
+  <section class="secao-t2u">
+    <input id="input" class="t2uObj" autofocus />
+    <button id="transcrever" class="ml-10" onclick={setOutput()}>Convert</button>
+  </section>
+  <section class="secao-t2u">
+    <div id="output" class="t2uObj"></div>
+    <button id="copiar" class="ml-10" onclick={ccbUnicode()}>Copy</button>
+  </section>
+  <section class="secao-t2u">
+    <button id="limpar" onclick={clearAll()}>Clear</button>
+  </section>
+</div>
+<img id="backButton" src="../assets/svg/back-icon.svg" onclick="goHome()"></img>

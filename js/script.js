@@ -1,3 +1,25 @@
+const ccbColor = (id) => {
+    const obj = document.getElementById(id);
+    const css = obj.style.cssText;
+
+    navigator.clipboard.writeText(obj.innerHTML)
+        .then(() => {
+            obj.style.cssText += `color:${obj.innerHTML}`
+        }).catch(function (err) {
+            obj.style.cssText = css
+            console.error('Erro ao copiar o conteúdo: ', err)
+        });
+    setTimeout(() => { obj.style.cssText = css }, 2000)
+}
+
+function hexToRgb(hex) {
+    const bigint = parseInt(hex.slice(1), 16);
+    const r = (bigint >> 16) & 255;
+    const g = (bigint >> 8) & 255;
+    const b = bigint & 255;
+    return `rgb(${r}, ${g}, ${b})`;
+}
+
 const text2Unicode = (text) => {
     return text.split('').map(char => {
         const code = char.charCodeAt(0);
@@ -30,12 +52,12 @@ const setOutput = () => {
     output.innerHTML = response;
 }
 
-const ccb = (name) => {
-    const obj = document.getElementById(name);
-    const btn = document.getElementById('copiar');
+const ccbUnicode = () => {
+    const obj = document.getElementById("output");
+    const btn = document.getElementById("copiar");
     const clear = document.getElementById("limpar");
 
-    clear.focus();    
+    clear.focus();
 
     navigator.clipboard.writeText(obj.innerHTML).then(function () {
         btn.classList.add('colorGreen');
@@ -46,166 +68,93 @@ const ccb = (name) => {
     setTimeout(() => clearCopyButton(), 2000);
 }
 
-const card = (element) => {
-    const poster = document.createElement("img")
-    poster.src = "https://www.themoviedb.org/t/p/w300" + element.poster_path
-
-    const titulo = document.createElement("p")
-    if (element.name)
-        titulo.innerHTML = element.name
-    else if (element.title)
-        titulo.innerHTML = element.title
-
-    const divNota = document.createElement("div")
-    divNota.classList.add("nota")
-
-    const nota = document.createElement("span")
-    nota.innerHTML = element.vote_average.toFixed(1)
-
-    divNota.appendChild(nota)
-
-    const card = document.createElement("div")
-    card.classList.add("cards")
-
-    card.appendChild(poster)
-    card.appendChild(titulo)
-    card.appendChild(divNota)
-
-    return card
+const t2uOnClick = async (e) => {
+    localStorage.setItem("bn-initialpage", "t2u")
+    loadPage("t2u")
 }
 
-const groupCard = (columns, cards) => {
-    const groupCard = document.createElement("div")
-    groupCard.classList.add("groupCard")
-    for (let i = 0; i < columns; i++) {
-        if (cards[i]) groupCard.appendChild(cards[i])
+const colorPickerOnClick = async (e) => {
+    localStorage.setItem("bn-initialpage", "colorPicker")
+    loadPage("colorPicker")
+}
+
+const jsonFormatterOnClick = async (e) => {
+    localStorage.setItem("bn-initialpage", "jsonFormatter")
+    loadPage("jsonFormatter")
+}
+
+const loadPage = (page) => {
+    if (page === "home" || !page)
+        $('.divDatail').load('./pages/home.html')
+    else if (page === "t2u") {
+        $('.divDatail').load('./pages/t2u.html', () => {
+            const t2uObj = document.querySelector("#input")
+            t2uObj.focus()
+        })
+    } else if (page === "colorPicker") {
+        $('.divDatail').load('./pages/colorPicker.html', () => {
+            const colorPicker = document.getElementById('colorPicker');
+            const hexValue = document.getElementById('hexValue');
+            const rgbValue = document.getElementById('rgbValue');
+            colorPicker.addEventListener('input', () => {
+                const color = colorPicker.value;
+                hexValue.textContent = color;
+                rgbValue.textContent = hexToRgb(color);
+            });
+        })
+    } else if (page === "jsonFormatter") {
+        $('.divDatail').load('./pages/jsonFormatter.html', () => {
+            const inputText = document.querySelector("#inputText")
+            inputText.focus()
+        })
     }
-    return groupCard
 }
 
-const data = (url) => {
-    const columns = 50
-    let dados;
-    fetch(url)
-        .then(resp => resp.json()
-            .then(json => {
-                dados = json.results
-                if (dados) {
-                    let cards = []
-                    const dadosOrdenados = dados.sort((a, b) => {
-                        if (a.vote_average > b.vote_average) return -1;
-                        if (a.vote_average < b.vote_average) return 1;
-                    })
-                    dadosOrdenados.forEach(element => {
-                        cards.push(card(element))
-                        if (cards.length == columns) {
-                            document.querySelector("#series").appendChild(groupCard(columns, cards))
-                            cards = []
-                        }
-                    })
-                    if (cards.length > 0)
-                        document.querySelector("#series").appendChild(groupCard(columns, cards))
-                }
-            })
-        )
+const goHome = () => {
+    localStorage.removeItem("bn-initialpage")
+    loadPage(null)
 }
 
-const menu = document.querySelector('#menu')
-const mcl = menu.classList
-
-const btnClose = document.querySelector('#btnClose')
-
-const detail = document.querySelector('#detail')
-
-const hideMenu = () => {
-    mcl.add('hide')
-    mcl.remove('show')
+window.onload = (event) => {
+    const page = localStorage.getItem("bn-initialpage")
+    loadPage(page)
 }
 
-const showMenu = () => {
-    mcl.add('show')
-    mcl.remove('hide')
+
+const processText = () => {
+    const inputText = document.getElementById('inputText').value;
+    try {
+        const jsonObject = JSON.parse(inputText);
+        const formattedJson = syntaxHighlight(jsonObject);
+        document.getElementById('outputJson').innerHTML = formattedJson;
+    } catch (error) {
+        document.getElementById('outputJson').textContent = 'Erro: O texto fornecido não é um JSON válido.';
+    }
 }
 
-btnMenu.addEventListener("click", e => {
-    e.preventDefault()
-    showMenu()
-})
+const syntaxHighlight = (json) => {
+    json = JSON.stringify(json, null, 4);
+    json = json.replace(/\"(\w+)\":/g, '<span class="key">$1</span>:');
+    json = json.replace(/: \"(.*?)\"/g, ': <span class="string">"$1"</span>');
+    json = json.replace(/: (\d+)/g, ': <span class="number">$1</span>');
+    json = json.replace(/: (true|false)/g, ': <span class="boolean">$1</span>');    
+    json = json.replace(/([\{\}\[\]])/g, '<span class="bracket">$1</span>');
+    json = json.replace(/(:)/g, '<span class="colon">$1</span>');
+    json = json.replace(/(,)/g, '<span class="comma">$1</span>');
+    return json;
+}
 
-btnClose.addEventListener("click", e => {
-    e.preventDefault()
-    hideMenu()
-})
+const ccbJSon = () => {
+    const obj = document.getElementById("outputJson");
+    const btn = document.getElementById("copiar");
 
-optionPwr7.addEventListener("click", async (e) => {
-    e.preventDefault()
-    $('#detail').load('./pages/pwr7.html')
-    hideMenu()
-})
+    console.log(obj.textContent)
 
-optionDelTmp.addEventListener("click", e => {
-    e.preventDefault()
-    $('#detail').load('./pages/delTmp.html')
-    hideMenu()
-})
-
-optionFilms.addEventListener("click", e => {
-    e.preventDefault()
-    detail.innerHTML = ` 
-    <ul>
-        <h2>Filmes mais assistidos na última semana</h2>
-        <li>
-            <div id="pwr7">
-                <section id="series" class="secao-filmes">
-                </section>
-            </div>
-        </li>
-    </ul>
-      `
-    data("https://api.themoviedb.org/3/trending/movie/week?api_key=02d559f2f2a791ee43539e09647ff4b2&language=pt-BR")
-    hideMenu()
-})
-
-t2u.addEventListener("click", e => {
-    e.preventDefault()
-    detail.innerHTML = ` 
-    <ul>
-        <h2>Texto para unicode</h2>
-        <li>
-            <div id="t2uDiv">
-                <section class="secao-t2u">
-                  <input id="input" class="t2uObj" autofocus />
-                  <button id="transcrever" onclick={setOutput()}>Transcrever</button>
-                </section>
-                <section class="secao-t2u">
-                  <div id="output" class="t2uObj"></div>
-                  <button id="copiar" onclick={ccb("output")}>Copiar</button>
-                </section>
-                <section class="secao-t2u">
-                  <button id="limpar" onclick={clearAll()}>Limpar</button>
-                </section>
-            </div>
-        </li>
-    </ul>
-      `
-    document.getElementById('input').focus();
-    clearCopyButton()
-    hideMenu()
-})
-
-optionSerie.addEventListener("click", e => {
-    e.preventDefault()
-    detail.innerHTML = ` 
-    <ul>
-        <h2>Séries mais assistidas na última semana</h2>
-        <li>
-            <div id="pwr7">
-                <section id="series" class="secao-filmes">
-                </section>
-            </div>
-        </li>
-    </ul>
-      `
-    data("https://api.themoviedb.org/3/trending/tv/week?api_key=02d559f2f2a791ee43539e09647ff4b2&language=pt-BR")
-    hideMenu()
-})
+    navigator.clipboard.writeText(obj.textContent).then(function () {
+        btn.classList.add('colorGreen');
+    }).catch(function (err) {
+        btn.classList.add('colorRed');
+        console.error('Erro ao copiar o conteúdo: ', err);
+    });
+    setTimeout(() => clearCopyButton(), 2000);
+}
