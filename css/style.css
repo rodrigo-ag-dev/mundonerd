@@ -114,9 +114,9 @@ input:focus {
     align-items: center;
     justify-content: center;
     width: 100%;
-    max-width: 1280px;
+    max-width: 1512px;
     height: 100vh;
-    max-height: 600px;
+    max-height: 750px;
     overflow: hidden;
     border-radius: 10px;
     background-color: #101b17aa;
@@ -191,6 +191,7 @@ input:focus {
     border-radius: 5px;
     background-color: transparent;
     transition: background .3s;
+    height: 160px;
 }
 
 .divMenu-item:hover {
@@ -236,7 +237,7 @@ pre {
     border: 1px solid #ddd;
     background-color: #f4f4f4;
     height: auto;
-    max-height: 220px;
+    max-height: 340px;
     overflow: auto;
     background-color: #eeeeee;
     word-break: normal !important;

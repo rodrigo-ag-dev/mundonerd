@@ -27,6 +27,12 @@ const text2Unicode = (text) => {
     }).join('');
 }
 
+const unicode2Text = (unicodeStr) => {
+    return unicodeStr.replace(/\\u[\dA-Fa-f]{4}/g, (match) => {
+        return String.fromCharCode(parseInt(match.replace('\\u', ''), 16));
+    });
+}
+
 const clearAll = () => {
     const text = document.getElementById("input");
     text.value = '';
@@ -41,14 +47,42 @@ const clearCopyButton = () => {
     btn.classList.remove('colorGreen');
 }
 
-const setOutput = () => {
-    const btn = document.getElementById('copiar');
-    const text = document.getElementById("input").value;
-    const response = text2Unicode(text);
-    const output = document.getElementById("output");
+const encodeUrl = () => {
+    setOutput("url", true)
+}
 
+const decodeUrl = () => {
+    setOutput("url", false)
+}
+
+const encodeUnicode = () => {
+    setOutput("unicode", true)
+}
+
+const decodeUnicode = () => {
+    setOutput("unicode", false)
+}
+
+const setOutput = (mode = null, encode = true) => {
+    let response = null
+    if (mode && mode == "unicode") {
+        const text = document.getElementById("input").value;
+        if (encode)
+            response = text2Unicode(text);
+        else
+            response = unicode2Text(text);
+    } else if (mode && mode == "url") {
+        const text = document.getElementById("input").value;
+        if (encode)
+            response = encodeURIComponent(text);
+        else
+            response = decodeURIComponent(text);
+    }
+
+    const btn = document.getElementById('copiar');
     btn.focus();
 
+    const output = document.getElementById("output");
     output.innerHTML = response;
 }
 
@@ -73,6 +107,11 @@ const t2uOnClick = async (e) => {
     loadPage("t2u")
 }
 
+const url2textOnClick = async (e) => {
+    localStorage.setItem("bn-initialpage", "url2text")
+    loadPage("url2text")
+}
+
 const colorPickerOnClick = async (e) => {
     localStorage.setItem("bn-initialpage", "colorPicker")
     loadPage("colorPicker")
@@ -87,7 +126,12 @@ const loadPage = (page) => {
     if (page === "home" || !page)
         $('.divDatail').load('./pages/home.html')
     else if (page === "t2u") {
-        $('.divDatail').load('./pages/t2u.html', () => {
+        $('.divDatail').load('./pages/text2unicode.html', () => {
+            const t2uObj = document.querySelector("#input")
+            t2uObj.focus()
+        })
+    } else if (page === "url2text") {
+        $('.divDatail').load('./pages/url2text.html', () => {
             const t2uObj = document.querySelector("#input")
             t2uObj.focus()
         })
@@ -122,8 +166,9 @@ window.onload = (event) => {
 
 
 const processText = () => {
-    const inputText = document.getElementById('inputText').value;
+    let inputText = document.getElementById('inputText').value;
     try {
+        inputText = inputText.replace(/(\w+):/g, '"$1":');        
         const jsonObject = JSON.parse(inputText);
         const formattedJson = syntaxHighlight(jsonObject);
         document.getElementById('outputJson').innerHTML = formattedJson;
@@ -137,7 +182,7 @@ const syntaxHighlight = (json) => {
     json = json.replace(/\"(\w+)\":/g, '<span class="key">$1</span>:');
     json = json.replace(/: \"(.*?)\"/g, ': <span class="string">"$1"</span>');
     json = json.replace(/: (\d+)/g, ': <span class="number">$1</span>');
-    json = json.replace(/: (true|false)/g, ': <span class="boolean">$1</span>');    
+    json = json.replace(/: (true|false)/g, ': <span class="boolean">$1</span>');
     json = json.replace(/([\{\}\[\]])/g, '<span class="bracket">$1</span>');
     json = json.replace(/(:)/g, '<span class="colon">$1</span>');
     json = json.replace(/(,)/g, '<span class="comma">$1</span>');
@@ -147,8 +192,6 @@ const syntaxHighlight = (json) => {
 const ccbJSon = () => {
     const obj = document.getElementById("outputJson");
     const btn = document.getElementById("copiar");
-
-    console.log(obj.textContent)
 
     navigator.clipboard.writeText(obj.textContent).then(function () {
         btn.classList.add('colorGreen');
