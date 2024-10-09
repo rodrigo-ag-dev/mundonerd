@@ -1,3 +1,47 @@
+window.onload = function () {
+    matrix();
+    const page = localStorage.getItem("bn-initialpage")
+    loadPage(page)
+};
+
+function matrix() {
+    const canvas = document.getElementById('matrix');
+    const ctx = canvas.getContext('2d');
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    const fontSize = 16;
+    const columns = canvas.width / fontSize;
+
+    const drops = [];
+    for (let x = 0; x < columns; x++) {
+        drops[x] = Math.random() * canvas.height / fontSize;
+    }
+
+    function draw() {
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.fillStyle = '#0F0';
+        ctx.font = fontSize + 'px monospace';
+
+        for (let i = 0; i < drops.length; i++) {
+            const text = letters[Math.floor(Math.random() * letters.length)];
+            ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+            if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                drops[i] = 0;
+            }
+
+            drops[i] += Math.random() * 2; // Varia a velocidade de queda
+        }
+    }
+
+    setInterval(draw, 33);
+}
+
 const ccbColor = (id) => {
     const obj = document.getElementById(id);
     const css = obj.style.cssText;
@@ -7,7 +51,7 @@ const ccbColor = (id) => {
             obj.style.cssText += `color:${obj.innerHTML}`
         }).catch(function (err) {
             obj.style.cssText = css
-            console.error('Erro ao copiar o conteúdo: ', err)
+            console.error('Erro ao copyButton o conteúdo: ', err)
         });
     setTimeout(() => { obj.style.cssText = css }, 2000)
 }
@@ -42,7 +86,7 @@ const clearAll = () => {
 }
 
 const clearCopyButton = () => {
-    const btn = document.getElementById('copiar');
+    const btn = document.getElementById('copyButton');
     btn.classList.remove('colorRed');
     btn.classList.remove('colorGreen');
 }
@@ -79,7 +123,7 @@ const setOutput = (mode = null, encode = true) => {
             response = decodeURIComponent(text);
     }
 
-    const btn = document.getElementById('copiar');
+    const btn = document.getElementById('copyButton');
     btn.focus();
 
     const output = document.getElementById("output");
@@ -88,8 +132,8 @@ const setOutput = (mode = null, encode = true) => {
 
 const ccbUnicode = () => {
     const obj = document.getElementById("output");
-    const btn = document.getElementById("copiar");
-    const clear = document.getElementById("limpar");
+    const btn = document.getElementById("copyButton");
+    const clear = document.getElementById("clearButton");
 
     clear.focus();
 
@@ -97,7 +141,7 @@ const ccbUnicode = () => {
         btn.classList.add('colorGreen');
     }).catch(function (err) {
         btn.classList.add('colorRed');
-        console.error('Erro ao copiar o conteúdo: ', err);
+        console.error('Erro ao copyButton o conteúdo: ', err);
     });
     setTimeout(() => clearCopyButton(), 2000);
 }
@@ -123,20 +167,21 @@ const jsonFormatterOnClick = async (e) => {
 }
 
 const loadPage = (page) => {
-    if (page === "home" || !page)
-        $('.divDatail').load('./pages/home.html')
-    else if (page === "t2u") {
-        $('.divDatail').load('./pages/text2unicode.html', () => {
-            const t2uObj = document.querySelector("#input")
-            t2uObj.focus()
+    if (page === "home" || !page) {
+        console.log('page', page)
+        $('.detail').load('./pages/home.html')
+    } else if (page === "t2u") {
+        $('.detail').load('./pages/text2unicode.html', () => {
+            const object = document.querySelector("#input")
+            object.focus()
         })
     } else if (page === "url2text") {
-        $('.divDatail').load('./pages/url2text.html', () => {
-            const t2uObj = document.querySelector("#input")
-            t2uObj.focus()
+        $('.detail').load('./pages/url2text.html', () => {
+            const object = document.querySelector("#input")
+            object.focus()
         })
     } else if (page === "colorPicker") {
-        $('.divDatail').load('./pages/colorPicker.html', () => {
+        $('.detail').load('./pages/colorPicker.html', () => {
             const colorPicker = document.getElementById('colorPicker');
             const hexValue = document.getElementById('hexValue');
             const rgbValue = document.getElementById('rgbValue');
@@ -147,7 +192,7 @@ const loadPage = (page) => {
             });
         })
     } else if (page === "jsonFormatter") {
-        $('.divDatail').load('./pages/jsonFormatter.html', () => {
+        $('.detail').load('./pages/jsonFormatter.html', () => {
             const inputText = document.querySelector("#inputText")
             inputText.focus()
         })
@@ -159,16 +204,10 @@ const goHome = () => {
     loadPage(null)
 }
 
-window.onload = (event) => {
-    const page = localStorage.getItem("bn-initialpage")
-    loadPage(page)
-}
-
-
 const processText = () => {
     let inputText = document.getElementById('inputText').value;
     try {
-        inputText = inputText.replace(/(\w+):/g, '"$1":');        
+        inputText = inputText.replace(/(\w+):/g, '"$1":');
         const jsonObject = JSON.parse(inputText);
         const formattedJson = syntaxHighlight(jsonObject);
         document.getElementById('outputJson').innerHTML = formattedJson;
@@ -191,13 +230,13 @@ const syntaxHighlight = (json) => {
 
 const ccbJSon = () => {
     const obj = document.getElementById("outputJson");
-    const btn = document.getElementById("copiar");
+    const btn = document.getElementById("copyButton");
 
     navigator.clipboard.writeText(obj.textContent).then(function () {
         btn.classList.add('colorGreen');
     }).catch(function (err) {
         btn.classList.add('colorRed');
-        console.error('Erro ao copiar o conteúdo: ', err);
+        console.error('Erro ao copyButton o conteúdo: ', err);
     });
     setTimeout(() => clearCopyButton(), 2000);
 }

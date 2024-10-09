@@ -3,27 +3,35 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preload" href="./js/script.js" as="script">
     <link rel="stylesheet" href="./css/style.css">
     <link rel="icon" href="./assets/images/favicon.ico" type="image/*">
-    <title>BestNext</title>
+    <title>Mundo nerd (RAGdata)</title>
 </head>
 
 <body>
-    <div class="divMain">
-        <div class="divInfo">
-            <img class="perfilImage" src="./assets/images/perfil.png" alt="foto do perfil" />
-            <h1>Rodrigo Gonçalves</h1>
+    <canvas id="matrix"></canvas>
+    <script src="js/script.js"></script>
+    <div class="header">
+        <div class="inRow inLeft">
+            <img class="imgPerfil" src="./assets/images/perfil.png" alt="foto do perfil" />
             <div class="inColumn">
-                <h2>Full-Stack Developer</h2>
-                <h2 class="clpurple">Cortex Intelligence</h2>
+                <h3>Rodrigo Gonçalves</h3>
+                <h4>Full-Stack Developer</h4>
+                <h4 class="clpurple">Cortex Intelligence</h4>
             </div>
         </div>
-        <div class="divDatail"></div>
+        <div class="inRow">
+            <h1 class="clgold">Mundo nerd</h1>
+        </div>
+        <div class="inRow inRight">
+            <div class="inColumn">
+            </div>
+        </div>
     </div>
-    <script src="./js/script.js"></script>
+    <div class="scroll">
+        <div class="detail"></div>
+    </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </body>
 

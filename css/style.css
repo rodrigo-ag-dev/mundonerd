@@ -1,90 +1,54 @@
+:root {
+    --heightHeader: 100px;
+    --primary-bg: #1d2125bb;
+    --secondary-bg: transparent;
+    --primary-bc: #333c43;
+}
+
 * {
     margin: 0;
     padding: 0;
     border: none;
     box-sizing: border-box;
     outline: none;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    scrollbar-width: thin;
+    scrollbar-color: #888 #222;
+}
+
+*::-webkit-scrollbar {
+    width: 6px;
+}
+
+*::-webkit-scrollbar-track {
+    background: #222;
+}
+
+*::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+    background: #555;
+    width: 20px;
+    scrollbar-width: 20px;
+}
+
+*::-moz-scrollbar-thumb:hover {
+    background: #555;
+    width: 20px;
+    scrollbar-width: 20px;
 }
 
 body {
     color: white;
-    background-color: #0c645d;
     display: flex;
     align-items: center;
     justify-content: center;
     width: 100%;
-    height: 100vh;
-    background-image: url('../assets/images/back.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    scrollbar-width: thin;
-}
-
-body:hover {
-    scrollbar-width: auto;
-}
-
-button {
-    border: 1px solid lightgray;
-    border-radius: 5px;
-    height: 28px;
-    padding: 5px;
-    cursor: pointer;
-    width: 100px;
-}
-
-button .processButton {
-    margin-left: 0px;
-    margin-right: 20px;
-}
-
-button:hover {
-    border-color: lightseagreen;
-}
-
-button:focus {
-    border-color: lightgreen;
-    background-color: lightgray;
-}
-
-#backButton {
-    position: absolute;
-    top: 16px;
-    right: 24px;
-    width: 24px;
-    height: 24px;
-    filter: invert(1);
-    cursor: pointer;
-}
-
-#limpar {
-    width: 100px;
-}
-
-.secao-t2u {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-}
-
-.t2uObj {
-    display: flex;
-    align-items: center;
-    font-size: 16px;
-    width: 100%;
-    margin-block: 5px;
-    white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.t2uDiv {
-    margin: 15px;
-    padding: 15px;
-    border-radius: 10px;
-    background-color: #ffffff55;
+    background: black;
 }
 
 input {
@@ -99,118 +63,25 @@ input:focus {
     border-color: lightgreen;
 }
 
-#output {
-    width: 100%;
+button {
+    border: 1px solid lightgray;
+    border-radius: 5px;
     height: 28px;
     padding: 5px;
-    border-radius: 5px;
-    border: 1px solid lightgray;
-}
-
-.divMain {
-    position: relative;
-    display: inline-grid;
-    grid-template-columns: 40% 60%;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    max-width: 1512px;
-    height: 100vh;
-    max-height: 750px;
-    overflow: hidden;
-    border-radius: 10px;
-    background-color: #101b17aa;
-}
-
-.divInfo {
-    position: relative;
-    min-width: 350px;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    padding: 15px;
-    padding-top: 55px;
-}
-
-.divInfo h1 {
-    font-size: 32px;
-    font-weight: normal;
-}
-
-.inColumn h2 {
-    margin-top: 10px;
-    font-size: 20px;
-    font-weight: normal;
-}
-
-.inColumn {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.perfilImage {
-    margin: 25px auto;
-    width: 156px;
-    height: 156px;
-    border-radius: 78px;
-    border: 4px solid white;
-    margin-bottom: 55px;
-}
-
-.clpurple {
-    color: #a558ee;
-    font-weight: 700;
-}
-
-.divMenu {
-    width: 100%;
-    display: inline-grid;
-    grid-template-columns: 33% 33% 33%;
-    background-color: transparent;
-    padding: 10px;
-}
-
-.divDatail {
-    position: relative;
-    padding-top: 40px;
-    width: 100%;
-    height: 100vh;
-    overflow-y: auto;
-}
-
-.divMenu-item {
-    display: flex;
-    text-align: center;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    font-size: 30px;
     cursor: pointer;
-    border-radius: 5px;
-    background-color: transparent;
-    transition: background .3s;
-    height: 160px;
+    width: 100px;
+    min-width: 100px;
+    font-size: 14px;
+    font-weight: bold;
 }
 
-.divMenu-item:hover {
-    background-color: #000000;
+button:hover {
+    border-color: lightseagreen;
 }
 
-.color-picker {
-    margin-top: 20px;
-    width: 250px;
-    height: 50px;
-}
-
-.color-values {
-    margin-top: 20px;
-    font-size: 1.2em;
-}
-
-.color-values-span {
-    cursor: pointer;
+button:focus {
+    border-color: lightgreen;
+    background-color: lightgray;
 }
 
 textarea {
@@ -227,7 +98,6 @@ textarea {
 textarea:focus {
     border-color: lightgreen;
 }
-
 
 pre {
     margin-block: 10px;
@@ -250,6 +120,209 @@ pre {
 
 pre:focus {
     border-color: lightgreen;
+}
+
+#matrix {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+}
+
+#output {
+    width: 100%;
+    height: 28px;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid lightgray;
+}
+
+.clpurple {
+    color: purple;
+}
+
+.clgold {
+    color: gold;
+}
+
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: var(--heightHeader);
+    background-color: VAR(--primary-bg);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    padding-inline: 15px;
+}
+
+.header h1 {
+    font-size: 48px;
+}
+
+.header h2 {
+    font-size: 32px;
+}
+
+.header h3 {
+    font-size: 20px;
+}
+
+.header h4 {
+    font-size: 15px;
+}
+
+.header .inColumn {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 5px;
+}
+
+.header .inRow {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    min-width: 30%;
+}
+
+.header .inLeft {
+    justify-content: flex-start;
+}
+
+.header .inRight {
+    justify-content: flex-end;
+}
+
+.header .minWidth {
+    min-width: 255px;
+}
+
+.imgPerfil {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+}
+
+.scroll {
+    position: fixed;
+    top: var(--heightHeader);
+    left: 0;
+    width: 100vw;
+    height: calc(100vh - var(--heightHeader));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    overflow-y: scroll;
+}
+
+.detail {
+    position: relative;
+    display: flex;
+    width: 100%;
+    max-width: 1060px;
+    min-height: calc(100vh - var(--heightHeader));
+    background-color: VAR(--primary-bg);
+}
+
+.menu {
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    display: inline-grid;
+    grid-template-columns: 33% 33% 33%;
+}
+
+.menu-item {
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    font-size: 30px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background .3s;
+    height: 160px;
+    gap: 10px
+}
+
+.imgMenu {
+    width: 70px;
+    height: 70px;
+    color: white;
+}
+
+.menu-item:hover {
+    background-color: #000000;
+}
+
+.panel {
+    margin: 15px;
+    width: 100%;
+    margin-top: 45px;
+    padding: 15px;
+}
+
+.section {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
+.object {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    width: 100%;
+    margin-block: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#backButton {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 24px;
+    height: 24px;
+    filter: invert(1);
+    cursor: pointer;
+}
+
+#colorPicker {
+    margin: 10px;
+    width: 90px;
+    height: 90px;
+    cursor: pointer;
+}
+
+.color-panel {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.color-values {
+    display: flex;
+    flex-direction: column;
+    margin-left: 25px;
+    gap: 15px;
+}
+
+.color-values-span {
+    cursor: pointer;
 }
 
 .key {
@@ -278,70 +351,4 @@ pre:focus {
 
 .comma {
     color: red;
-}
-
-.ml-10 {
-    margin-left: 10px;
-}
-
-@media (max-width: 1300px) {
-    .divMain {
-        margin-inline: 20px;
-    }
-
-    .divMenu {
-        grid-template-columns: 50% 50%;
-    }
-}
-
-@media (max-width: 768px) {
-    .divMain {
-        margin-inline: 1px;
-        grid-template-columns: 1fr;
-        max-height: none;
-    }
-
-    .divMenu {grid-template-columns: 95%;}
-}
-
-/* Estilo padrão para todas as barras de rolagem */
-*::-webkit-scrollbar {
-    width: 6px;
-    /* Largura padrão */
-}
-
-/* Estilo para a trilha da barra de rolagem */
-*::-webkit-scrollbar-track {
-    background: #222;
-}
-
-/* Estilo para o polegar da barra de rolagem */
-*::-webkit-scrollbar-thumb {
-    background: #888;
-    border-radius: 10px;
-}
-
-/* Estilo ao passar o mouse sobre a barra de rolagem */
-*::-webkit-scrollbar-thumb:hover {
-    background: #555;
-    width: 20px;
-    /* Largura ao passar o mouse */
-    scrollbar-width: 20px;
-    /* Largura ao passar o mouse */
-}
-
-/* Para Firefox */
-* {
-    scrollbar-width: thin;
-    /* Largura padrão */
-    scrollbar-color: #888 #222;
-    /* Cor do polegar e da trilha */
-}
-
-/* Estilo ao passar o mouse sobre a barra de rolagem no Firefox */
-*::-moz-scrollbar-thumb:hover {
-    background: #555;
-    width: 20px;
-    scrollbar-width: 20px;
-    /* Largura ao passar o mouse */
 }
